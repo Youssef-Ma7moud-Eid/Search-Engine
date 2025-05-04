@@ -41,11 +41,11 @@ def get_contant(url):
 
 def main():
   urls = read_file('/home/hadoop/Links.txt')
-  for link in urls:
+  for i in range(len(urls)):
     try:
-      Raw_text = get_contant(link)
+      Raw_text = get_contant(urls[i])
       Clean_text = data_cleaning(Raw_text)
-      filename = url_to_filename(link)
+      filename = url_to_filename(urls[i])
       hdfs_path = f"/user/hadoop/scraped_data/{filename}"
 
       proc = subprocess.run(
@@ -55,12 +55,11 @@ def main():
           stderr=subprocess.PIPE)
 
       if proc.returncode != 0:
-          print(f"Error in {link}: {proc.stderr.decode()}")
+          print(f"Error in ({i})-> {urls[i]}: {proc.stderr.decode()}")
 
 
     except Exception as e:
-        print(f"Error in {link} -> {e}")
-
+        print(f"Error in ({i}): {urls[i]} -> {e}")
 
 
 if __name__ == "__main__":
