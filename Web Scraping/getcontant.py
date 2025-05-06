@@ -23,8 +23,12 @@ def data_cleaning(raw_text):
   clean_lines = [line for line in lines if line]
 
   clean_text = "\n".join(clean_lines)
-  # words = re.findall(r'\b\w+\b', clean_text)
-  return clean_text
+  words = re.findall(r'\b\w+\b', clean_text)
+  words_string = "\n".join(words)
+  return words_string
+
+
+
 
 def get_contant(url):
   response = requests.get(url)
@@ -57,6 +61,8 @@ def main():
       if proc.returncode != 0:
           print(f"Error in ({i})-> {urls[i]}: {proc.stderr.decode()}")
 
+      # with open(filename, "w", encoding="utf-8") as f:  f.write(Clean_text)
+      # files.download(filename)
 
     except Exception as e:
         print(f"Error in ({i}): {urls[i]} -> {e}")
